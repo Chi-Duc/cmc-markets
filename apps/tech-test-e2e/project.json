@@ -1,0 +1,28 @@
+{
+  "root": "apps/tech-test-e2e",
+  "sourceRoot": "apps/tech-test-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/tech-test-e2e/cypress.json",
+        "devServerTarget": "tech-test:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "tech-test:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/tech-test-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["tech-test"]
+}
