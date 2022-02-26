@@ -51,8 +51,8 @@ export default function Header(props: THeaderProps): JSX.Element {
             <IconButton
               size="large"
               edge="end"
-              aria-label="account of current user"
-              aria-controls={'user account'}
+              aria-label="search product"
+              aria-controls={'search a product'}
               aria-haspopup="true"
               onClick={handleOpenSearch}
               color="inherit"

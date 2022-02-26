@@ -20,9 +20,7 @@ export interface IAppContext {
 export function AppContextWrapper({ children }) {
   const [ctxCountries, setCtxCountries] = useState<TCountry[]>([]);
   const [ctxSelectedCountry, setCtxSelectedCountry] = useState<TCountry>();
-  const [ctxShoppingCart, setCtxShoppingCart] = useState<
-    TProductWithQuantity[]
-  >([]);
+  const [ctxShoppingCart, setCtxShoppingCart] = useState<TProductWithQuantity[]>([]);
   const [ctxBusy, setCtxBusy] = useState<boolean>(false);
 
   const setSelectedCountry = (country: TCountry) => {

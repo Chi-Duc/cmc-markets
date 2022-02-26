@@ -73,7 +73,7 @@ export default function ProductCard(props: TProductCardProps): JSX.Element {
           <IconButton aria-label="add to favorites">
             <Favorite />
           </IconButton>
-          <IconButton aria-label="add to bag" onClick={handleAddToCartClick}>
+          <IconButton aria-label="add to cart" onClick={handleAddToCartClick}>
             <ShoppingCart />
           </IconButton>
         </CardActions>
