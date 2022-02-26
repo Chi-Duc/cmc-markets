@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { TCountry, getCountries } from '../services/country';
 import { TProduct, TProductWithQuantity } from '../services/product';
 
-const AppContext = createContext({} as IAppContext);
+export const AppContext = createContext({} as IAppContext);
 
 export interface IAppContext {
   countries: TCountry[];

@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import ProductCard from '../src/components/product-card';
 import { TProduct } from '../src/services/product';
+import { renderInContext } from './test-utils';
 
 describe('Product card', () => {
   const testProduct: TProduct = {
@@ -13,13 +13,13 @@ describe('Product card', () => {
 
   it('should contain product name', () => {
 
-    const { getByText } = render(<ProductCard product={testProduct} />);
+    const { getByText } = renderInContext(<ProductCard product={testProduct} />);
 
     expect(getByText(testProduct.name)).toBeInTheDocument();
   });
 
   it('should have a button to add product to the shopping cart', () => {
-    const { queryByRole } = render(
+    const { queryByRole } = renderInContext(
       <ProductCard product={testProduct} />
     );
 

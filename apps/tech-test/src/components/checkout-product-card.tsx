@@ -51,6 +51,51 @@ export default function CheckoutProductCard(props: TProductCardProps): JSX.Eleme
     updateProductQuantity(product, -1);
   }
 
+  const renderProductDetails = () => {
+    return (
+      <CardContent sx={{ flex: '1 auto' }}>
+        <Typography component="div" variant="h6">
+          {product.name}
+        </Typography>
+        <Typography variant="subtitle1" color="text.secondary" component="div">
+          {product.description}
+        </Typography>
+        <Typography component="div" variant="body1" sx={{ marginTop: '10px' }}>
+          {`${selectedCountry.currencySymbol}${price.toFixed(2)}`}
+        </Typography>
+      </CardContent>
+    );
+  }
+
+  const renderQuantityControl = () => {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          margin: '0 10px 10px 0',
+        }}
+      >
+        <div>
+          <IconButton aria-label="decrease" onClick={handleDecreaseQuantity}>
+            <Remove />
+          </IconButton>
+          <Button variant="outlined" disabled>
+            <Typography component="div" variant="h6">
+              {quantity}
+            </Typography>
+          </Button>
+          <IconButton aria-label="increase" onClick={handleIncreaseQuantity}>
+            <Add />
+          </IconButton>
+        </div>
+        <Button variant="outlined" onClick={handleRemoveItemClick}>
+          Remove
+        </Button>
+      </Box>
+    );
+  }
+
   return (
     <>
       <Card sx={{ display: 'flex' }}>
@@ -61,51 +106,8 @@ export default function CheckoutProductCard(props: TProductCardProps): JSX.Eleme
           alt="product image"
         />
         <Box flexGrow={1} sx={{ display: 'flex', flexDirection: 'column' }}>
-          <CardContent sx={{ flex: '1 auto' }}>
-            <Typography component="div" variant="h6">
-              {product.name}
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              component="div"
-            >
-              {product.description}
-            </Typography>
-            <Typography component="div" variant="body1" sx={{ marginTop: '10px'   }}>
-              {`${selectedCountry.currencySymbol}${price.toFixed(2)}`}
-            </Typography>
-          </CardContent>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              margin: '0 10px 10px 0',
-            }}
-          >
-            <div>
-              <IconButton
-                aria-label="decrease"
-                onClick={handleDecreaseQuantity}
-              >
-                <Remove />
-              </IconButton>
-              <Button variant="outlined" disabled>
-                <Typography component="div" variant="h6">
-                  {quantity}
-                </Typography>
-              </Button>
-              <IconButton
-                aria-label="increase"
-                onClick={handleIncreaseQuantity}
-              >
-                <Add />
-              </IconButton>
-            </div>
-            <Button variant="outlined" onClick={handleRemoveItemClick}>
-              Remove
-            </Button>
-          </Box>
+          {renderProductDetails()}
+          {renderQuantityControl()}
         </Box>
       </Card>
       <ConfirmationDialog
