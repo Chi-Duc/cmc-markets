@@ -8,6 +8,11 @@ export type TProduct = {
   image?: string;
 }
 
+export type TProductPage = {
+  products: TProduct[];
+  hasMore: boolean;
+}
+
 export type TProductWithQuantity = {
   product: TProduct;
   quantity: number;
@@ -16,6 +21,6 @@ export type TProductWithQuantity = {
 export async function getProducts(
   pageIndex: number = 0,
   pageSize: number = 20
-): Promise<TProduct[]> {
-  return (await fetchProducts(pageIndex, pageSize)) as TProduct[];
+): Promise<TProductPage> {
+  return (await fetchProducts(pageIndex, pageSize)) as TProductPage;
 }

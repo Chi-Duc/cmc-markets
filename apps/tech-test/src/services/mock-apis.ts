@@ -4,7 +4,7 @@ let products: any[] = [];
 
 const productImages = [];
 
-const generateProducts = (numberOfProducts: number = 20) : any[] => {
+const generateProducts = (numberOfProducts: number = 30) : any[] => {
   const generatedProducts = [];
   for (let i = 0; i < numberOfProducts; i++) {
     generatedProducts.push({
@@ -41,14 +41,17 @@ const data = {
     {
       name: 'Australia',
       conversionRateFromAUD: 1,
+      currencySymbol: '$',
     },
     {
       name: 'US',
       conversionRateFromAUD: 1.5,
+      currencySymbol: '$',
     },
     {
       name: 'UK',
       conversionRateFromAUD: 2,
+      currencySymbol: '£',
     },
   ],
 };
@@ -63,7 +66,12 @@ export const fetchCountries = () =>
 export const fetchProducts = (pageIndex: number, pageSize: number) =>
   new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(data.products);
+      const start = pageIndex * pageSize;
+      const end = (pageIndex + 1) * pageSize;
+      resolve({
+        products: data.products.slice(start, end),
+        hasMore: end < data.products.length
+      });
     }, 100);
   });
 

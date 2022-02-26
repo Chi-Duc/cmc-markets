@@ -65,7 +65,7 @@ export default function CheckOutCard() {
             Cart total:
           </Typography>
           <Typography variant="body1" color="text.primary">
-            ${totalCart.toFixed(2)}
+            {`${selectedCountry.currencySymbol}${totalCart.toFixed(2)}`}
           </Typography>
         </CardContentRow>
         <CardContentRow>
@@ -73,7 +73,7 @@ export default function CheckOutCard() {
             Shipping cost:
           </Typography>
           <Typography variant="body1" color="text.primary">
-            ${shippingCost}
+            {`${selectedCountry.currencySymbol}${shippingCost}`}
           </Typography>
         </CardContentRow>
         <CardContentRow className="last-row">
@@ -81,7 +81,7 @@ export default function CheckOutCard() {
             Total:
           </Typography>
           <Typography variant="h6" color="text.primary">
-            ${(totalCart + shippingCost).toFixed(2)}
+            {`${selectedCountry.currencySymbol}${(totalCart + shippingCost).toFixed(2)}`}
           </Typography>
         </CardContentRow>
       </CardContent>

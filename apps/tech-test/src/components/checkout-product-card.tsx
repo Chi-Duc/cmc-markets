@@ -73,7 +73,7 @@ export default function CheckoutProductCard(props: TProductCardProps): JSX.Eleme
               {product.description}
             </Typography>
             <Typography component="div" variant="body1" sx={{ marginTop: '10px'   }}>
-              ${price.toFixed(2)}
+              {`${selectedCountry.currencySymbol}${price.toFixed(2)}`}
             </Typography>
           </CardContent>
           <Box

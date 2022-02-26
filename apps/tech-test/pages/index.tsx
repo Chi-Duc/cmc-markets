@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { Grid, Pagination } from '@mui/material';
 import { TProduct, getProducts } from '../src/services/product';
@@ -16,14 +16,19 @@ const Footer = styled.div`
 
 export function Index() {
   const [products, setProducts] = useState<TProduct[]>([]);
+  const [pageCount, setPageCount] = useState<number>(0);
 
-  useEffect(() => {
-    const retrieveProducts = async() => {
-      const products = await getProducts();      
-
-      setProducts(products);
-    }
+  const retrieveProducts = async (pageIndex: number = 0, pageSize: number = 12) => {
+    const currentPageNumber = pageIndex + 1;
+    const firstProductPage = await getProducts(pageIndex, pageSize);
     
+    setProducts(firstProductPage.products);
+    if (firstProductPage.hasMore && pageCount <= currentPageNumber) {
+      setPageCount(currentPageNumber + 1);
+    }    
+  };
+
+  useEffect(() => {    
     retrieveProducts();
   }, []);
 
@@ -35,13 +40,19 @@ export function Index() {
     )
   }
 
+  const handlePageNavigation = (event: ChangeEvent<unknown>, page: number) => {
+    retrieveProducts(page - 1);
+  }
+
   return (
     <StyledPage>
       <Grid container spacing={2} sx={{ padding: 2 }}>
         {products.map((product) => renderProductCard(product))}
       </Grid>
       <Footer>
-        <Pagination count={5} variant="outlined" color="primary" />
+        {pageCount > 0 && (
+          <Pagination count={pageCount} variant="outlined" color="primary" onChange={handlePageNavigation}/>
+        )}
       </Footer>
     </StyledPage>
   );

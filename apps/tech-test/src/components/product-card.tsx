@@ -66,7 +66,7 @@ export default function ProductCard(props: TProductCardProps): JSX.Element {
             color="text.primary"
             sx={{ marginTop: 1 }}
           >
-            ${price}
+            {`${selectedCountry.currencySymbol}${price}`}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
