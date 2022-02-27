@@ -27,7 +27,7 @@ const CardContentRow = styled.div`
 export default function CheckOutCard() {
   const router = useRouter();
   const appContext = useAppContext();
-  const { selectedCountry, shoppingCart } = appContext;
+  const { selectedCountry, shoppingCart, setBusy } = appContext;
   const [shippingCost, setShippingCost] = useState<number>(0);
 
   const totalCart = shoppingCart.reduce((prev, curr) => 
@@ -36,9 +36,17 @@ export default function CheckOutCard() {
   );
 
   const handlePlaceOrder = async () => {
-    const result = await placeOrder(shoppingCart);
-    if (result) {
-      router.push('/thankyou');
+    try {
+      setBusy(true); 
+
+      const result = await placeOrder(shoppingCart);
+      if (result) {
+        router.push('/thankyou');
+      }      
+    } catch (error) {
+      console.log('Error placing the order: ', error);
+    } finally {
+      setBusy(false); 
     }
   };
 
@@ -48,9 +56,12 @@ export default function CheckOutCard() {
 
   useEffect(() => {
     const getShippingCost = async () => {
-      const cost = await calculateShippingCost(totalCart);
-
-      setShippingCost(cost);
+      try {
+        const cost = await calculateShippingCost(totalCart);
+        setShippingCost(cost);
+      } catch (error) {
+        console.log('Error getting shipping cost: ', error);
+      }
     };
 
     getShippingCost();

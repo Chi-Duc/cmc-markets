@@ -61,13 +61,15 @@ export default function ProductCard(props: TProductCardProps): JSX.Element {
               {product.description}
             </Typography>
           </CardContentBody>
-          <Typography
-            variant="body1"
-            color="text.primary"
-            sx={{ marginTop: 1 }}
-          >
-            {`${selectedCountry.currencySymbol}${price}`}
-          </Typography>
+          {selectedCountry && (
+            <Typography
+              variant="body1"
+              color="text.primary"
+              sx={{ marginTop: 1 }}
+            >
+              {`${selectedCountry.currencySymbol}${price}`}
+            </Typography>
+          )}
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">

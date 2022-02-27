@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import styled from 'styled-components';
-import { Grid, Pagination } from '@mui/material';
+import { Grid, Pagination, Box, LinearProgress } from '@mui/material';
 import { TProduct, getProducts } from '../src/services/product';
 import ProductCard from '../src/components/product-card';
 
@@ -14,18 +14,26 @@ const Footer = styled.div`
   justify-content: center;
 `;
 
-export function Index() {
+export function Index() {  
   const [products, setProducts] = useState<TProduct[]>([]);
   const [pageCount, setPageCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const retrieveProducts = async (pageIndex: number = 0, pageSize: number = 12) => {
     const currentPageNumber = pageIndex + 1;
-    const firstProductPage = await getProducts(pageIndex, pageSize);
-    
-    setProducts(firstProductPage.products);
-    if (firstProductPage.hasMore && pageCount <= currentPageNumber) {
-      setPageCount(currentPageNumber + 1);
-    }    
+    try {
+      setLoading(true);
+      const firstProductPage = await getProducts(pageIndex, pageSize);
+
+      setProducts(firstProductPage.products);
+      if (firstProductPage.hasMore && pageCount <= currentPageNumber) {
+        setPageCount(currentPageNumber + 1);
+      }
+    } catch (error) {
+      console.log('Error retrieving products!', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {    
@@ -42,6 +50,14 @@ export function Index() {
 
   const handlePageNavigation = (event: ChangeEvent<unknown>, page: number) => {
     retrieveProducts(page - 1);
+  }
+
+  if (loading) {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>
+    );
   }
 
   return (

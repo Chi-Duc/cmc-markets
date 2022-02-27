@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { Grid, Button, Typography } from '@mui/material';
+import { Grid, Box, LinearProgress } from '@mui/material';
 import CheckOutProductCard from '../src/components/checkout-product-card';
 import CheckOutCard from '../src/components/checkout-card';
 import { useAppContext } from '../src/context/use-app-context';
@@ -18,7 +18,7 @@ const ProductCardContainer = styled.div`
 export default function CheckoutPage(props) {
   const appContext = useAppContext();
   const router = useRouter();
-  const { shoppingCart } = appContext;
+  const { shoppingCart, busy } = appContext;
 
   useEffect(() => {
     if (shoppingCart.length === 0) {
@@ -32,6 +32,14 @@ export default function CheckoutPage(props) {
         <CheckOutProductCard productWithQuantity={productInCart} />
       </ProductCardContainer>
     ));
+  }
+
+  if (busy) {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>
+    );
   }
 
   return (
